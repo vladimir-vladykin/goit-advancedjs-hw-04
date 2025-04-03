@@ -54,8 +54,8 @@ function startLoadingImages(searchQuery) {
       updateLayoutWithNewImages(imageData);
     })
     .catch(error => {
-      clearLayout(galleryList);
-      showErrorMessage(error);
+      clearLayout(loadingLayout);
+      showErrorMessage(error.message);
     });
 }
 
@@ -66,6 +66,7 @@ function continueLoadingImages() {
   loadImages(latestSearchQuery, currentPage)
     .then(imageData => {
       updateLayoutWithNewImages(imageData);
+      smoothScrollDownIfPossible();
     })
     .catch(error => {
       showErrorMessage(error.message);
@@ -100,6 +101,16 @@ function updateLoadMoreButton(shouldButtonBeAvailable) {
   } else {
     clearLayout(loadingLayout);
   }
+}
+
+function smoothScrollDownIfPossible() {
+  const anyCard = document.querySelector('.gallery-item');
+  const cardHeight = anyCard.getBoundingClientRect().height;
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
 }
 
 function showErrorMessage(message) {

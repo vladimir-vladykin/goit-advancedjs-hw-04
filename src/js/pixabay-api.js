@@ -16,8 +16,6 @@ export async function loadImages(searchQuery, page) {
   searchParams.append('page', page);
 
   const url = `https://pixabay.com/api/?${searchParams}`;
-  console.log('Request url is', url);
-
   const response = await axios.get(url);
   return {
     images: response.data.hits,
