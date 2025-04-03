@@ -1,3 +1,4 @@
-# goit-advancedjs-hw-03
-JS adv homework 03
-Fetch images
+# goit-advancedjs-hw-04
+JS adv homework 04
+
+Fetch images + Pagination
