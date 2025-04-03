@@ -48,6 +48,7 @@ function startLoadingImages(searchQuery) {
         showErrorMessage(
           'Sorry, there are no images matching your search query. Please try again!'
         );
+        clearLayout(loadingLayout);
         return;
       }
 
