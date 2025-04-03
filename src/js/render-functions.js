@@ -1,9 +1,13 @@
+export function displayLoadMoreButton(layout) {
+  layout.innerHTML = '<button class="load-more-button">Load more</button>';
+}
+
 export function clearLayout(galleryList) {
   galleryList.innerHTML = '';
 }
 
-export function renderLoader(galleryList) {
-  galleryList.innerHTML = `<span class="loader"></span>`;
+export function renderLoader(layout) {
+  layout.innerHTML = `<span class="loader"></span>`;
 }
 
 export function renderImages(galleryList, images) {
