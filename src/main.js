@@ -5,8 +5,6 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-const searchButton = document.querySelector('input[name=search]');
-const searchInput = document.querySelector('.search-form button');
 const searchForm = document.querySelector('.search-form');
 const galleryList = document.querySelector('.gallery');
 

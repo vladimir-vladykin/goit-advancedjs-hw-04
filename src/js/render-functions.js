@@ -13,7 +13,6 @@ export function renderImages(galleryList, images) {
     })
     .join('');
 
-  console.log(`Markup is ${markup}`);
   galleryList.insertAdjacentHTML('beforeend', markup);
 }
 
