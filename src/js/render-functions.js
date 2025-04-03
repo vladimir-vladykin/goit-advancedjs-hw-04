@@ -2,8 +2,8 @@ export function displayLoadMoreButton(layout) {
   layout.innerHTML = '<button class="load-more-button">Load more</button>';
 }
 
-export function clearLayout(galleryList) {
-  galleryList.innerHTML = '';
+export function clearLayout(anyLayout) {
+  anyLayout.innerHTML = '';
 }
 
 export function renderLoader(layout) {

@@ -1,4 +1,4 @@
-import { loadImages } from './js/pixabay-api.js';
+import { loadImages, HITS_PER_PAGE } from './js/pixabay-api.js';
 import {
   renderImages,
   clearLayout,
@@ -43,15 +43,15 @@ function startLoadingImages(searchQuery) {
   renderLoader(loadingLayout);
 
   loadImages(searchQuery, currentPage)
-    .then(images => {
-      if (images.length === 0) {
+    .then(imageData => {
+      if (imageData.images.length === 0) {
         showErrorMessage(
           'Sorry, there are no images matching your search query. Please try again!'
         );
         return;
       }
 
-      updateLayoutWithNewImages(images);
+      updateLayoutWithNewImages(imageData);
     })
     .catch(error => {
       clearLayout(galleryList);
@@ -64,31 +64,42 @@ function continueLoadingImages() {
   renderLoader(loadingLayout);
 
   loadImages(latestSearchQuery, currentPage)
-    .then(images => {
-      updateLayoutWithNewImages(images);
+    .then(imageData => {
+      updateLayoutWithNewImages(imageData);
     })
     .catch(error => {
-      showErrorMessage(error);
+      showErrorMessage(error.message);
 
       // display load more button again in case we failed to load this part
-      updateLoadMoreButton();
+      updateLoadMoreButton(true);
     });
 }
 
-function updateLayoutWithNewImages(images) {
+function updateLayoutWithNewImages({ images, totalImageCount }) {
+  const loadedImagesCount = currentPage * HITS_PER_PAGE;
+
+  const stillMoreImagesToLoad = loadedImagesCount < totalImageCount;
   renderImages(galleryList, images);
-  updateLoadMoreButton();
+  updateLoadMoreButton(stillMoreImagesToLoad);
   lighboxInstance.refresh();
+
+  if (!stillMoreImagesToLoad) {
+    showErrorMessage(
+      "We're sorry, but you've reached the end of search results."
+    );
+  }
 }
 
-function updateLoadMoreButton() {
-  displayLoadMoreButton(loadingLayout);
-  const loadMoreButton = document.querySelector('.load-more-button');
-  loadMoreButton.addEventListener('click', event => {
-    continueLoadingImages();
-  });
-
-  // TODO check should we display button or hide
+function updateLoadMoreButton(shouldButtonBeAvailable) {
+  if (shouldButtonBeAvailable) {
+    displayLoadMoreButton(loadingLayout);
+    const loadMoreButton = document.querySelector('.load-more-button');
+    loadMoreButton.addEventListener('click', event => {
+      continueLoadingImages();
+    });
+  } else {
+    clearLayout(loadingLayout);
+  }
 }
 
 function showErrorMessage(message) {

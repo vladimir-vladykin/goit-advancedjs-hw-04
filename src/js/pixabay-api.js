@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const HITS_PER_PAGE = 15;
+export const HITS_PER_PAGE = 15;
 
 const pixabayBaseSearchParams = {
   key: '49592968-cbe332f50941125abd5725851',
@@ -19,5 +19,8 @@ export async function loadImages(searchQuery, page) {
   console.log('Request url is', url);
 
   const response = await axios.get(url);
-  return response.data.hits;
+  return {
+    images: response.data.hits,
+    totalImageCount: response.data.totalHits,
+  };
 }
